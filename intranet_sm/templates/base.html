@@ -395,6 +395,8 @@
                     {% endif %}
                 {% endfor %}
 
+                {% include "menu_solicitudes.html" %}
+
                 {% for group in user.groups.all %}
                     {% if group.name == 'Empleados' %}
                         {% include "menu_users.html" %}

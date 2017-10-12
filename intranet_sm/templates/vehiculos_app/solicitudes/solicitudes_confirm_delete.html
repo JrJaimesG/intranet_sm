@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Principal{% endblock %}
+
+{% block page_title %}Principal{% endblock page_title %}
+
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/select2/select2.css' %}" />
+    <link rel="stylesheet" href="{% static 'plugins/DataTables/media/css/DT_bootstrap.css' %}" />
+
+{% endblock css %}
+
+
+{% block content %}
+
+
+    <!-- start: PAGE CONTENT -->
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <!-- start: FROM -->
+            <form action="" method="post">{% csrf_token %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-external-link-square"></i>
+                    Eliminar solicitud
+                    <div class="panel-tools">
+                        <a class="btn btn-xs btn-link panel-collapse collapses" href="#"> </a>
+                    </div>
+                </div>
+                <div class="panel-body">
+
+                    <table class="table table-bordered">
+
+                        <tr>
+                            <td>Choferes</td>
+                            <td>{{object.empleado}}</td>
+                        </tr>
+                        <tr>
+                            <td>Destino</td>
+                            <td>{{object.destino}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha de Registro</td>
+                            <td>{{object.fecha_reg}}</td>
+                        </tr>
+
+                    </table>
+
+                    <p>¿ Seguro de eliminar este registro ?</p>
+
+                    <a href="" onclick="document.forms[0].submit();return false;" class="btn btn btn-danger">
+                    <i class="fa fa-trash-o"></i> Eliminar</a>
+                    <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Cancelar</a>
+
+                </div>
+
+            </div>
+            </form>
+            <!-- end: FROM -->
+
+        </div>
+    </div>
+
+    <!-- end: PAGE CONTENT-->
+
+{% endblock content %}
+
+{% block js %}
+
+
+    <script src="{% static "js/regiones.js" %}"></script>
+
+
+    <script>
+      jQuery(document).ready(function() {
+        Main.init();
+        Regiones.init();
+      });
+    </script>
+
+{% endblock js %}

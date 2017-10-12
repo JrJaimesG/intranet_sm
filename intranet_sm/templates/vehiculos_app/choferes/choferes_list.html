@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Usuarios Intranet{% endblock %}
+
+
+{% block content-header %}
+    <h1>
+        {{ page.title }}
+        <small>{{ page.subtitle }}</small>
+    </h1>
+{% endblock content-header %}
+
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-11">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Listado de choferes registrados en el CIDA</h3>
+
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control pull-right"
+                                       placeholder="Search">
+
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive ">
+
+                        <a href="{% url 'vehiculosapp:choferes_create' %}"
+                                               title="Agregar chofer"
+                                               class="btn btn-info">Agregar chofer <i class="fa fa-plus"></i></a>
+
+                        </br></br>
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Id</th>
+                                <th>Chofer</th>
+                                <th>Posee licencia para manejar motocicleta</th>
+                                <th>Tipo de licencia</th>
+                                <th>Fecha de vencimiento de la licencia</th>
+                                <th>Activo</th>
+                                <th>Estado del chofer</th>
+                                <th>Acción</th>
+                            </tr>
+                            {% for cho in choferes_list %}
+                                <tr>
+                                    <td>{{ cho.id }}</td>
+                                    <td>{{ cho.empleado }}</td>
+                                    <td>{{ cho.licencia_moto }}</td>
+                                    <td>{{ cho.licencia }}</td>
+                                    <td>{{ cho.venc_licencia }}</td>
+                                    <td>{{ cho.activo }}</td>
+                                    <td>{{ cho.tipo_asignacion_chofer }}</td>
+
+                                    <td>
+                                        <div class="btn-group">
+
+                                            <a href="{% url 'vehiculosapp:choferes_update' cho.id %}"
+                                               class="btn btn-info"
+                                               title="Editar solicitud"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'vehiculosapp:choferes_view' cho.id %}"
+                                               title="Ver solicitud"
+                                               class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                            <a href="{% url 'vehiculosapp:choferes_delete' cho.id %}"
+                                               title="Eliminar"
+                                               class="btn btn-warning"><i class="fa fa-remove"></i></a>
+
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

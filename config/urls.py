@@ -21,6 +21,9 @@ urlpatterns = [
     # Administator app
     url(r'^administrator/', include('intranet_sm.administrator_app.urls', namespace='administrator')),
 
+    # Vehiculos app
+    url(r'^vehicles/', include('intranet_sm.vehiculos_app.urls', namespace='vehiculosapp')),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

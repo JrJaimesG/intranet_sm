@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}Usuarios Intranet{% endblock %}
+
+
+{% block content-header %}
+    <h1>
+        {{ page.title }}
+        <small>{{ page.subtitle }}</small>
+    </h1>
+{% endblock content-header %}
+
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            <div class="col-xs-11">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Listado de vehiculos registrados en el CIDA</h3>
+
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control pull-right"
+                                       placeholder="Search">
+
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive ">
+
+                        <a href="{% url 'vehiculosapp:vehiculos_create' %}"
+                                               title="Agregar vehiculo"
+                                               class="btn btn-info">Agregar vehiculo <i class="fa fa-plus"></i></a>
+
+                        </br></br>
+                        <table class="table table-hover">
+                            <tr>
+                                <th>Id</th>
+                                <th>Placa</th>
+                                <th>Modelo</th>
+                                <th>Color</th>
+                                <th>Tipo</th>
+                                <th>Uso</th>
+                                <th>Número de puestos</th>
+                                <th>Capacidad del tanque de la gasolina</th>
+                                <th>Acción</th>
+                            </tr>
+                            {% for veh in vehiculos_list %}
+                                <tr>
+                                    <td>{{ veh.id }}</td>
+                                    <td>{{ veh.placa }}</td>
+                                    <td>{{ veh.modelo }}</td>
+                                    <td>{{ veh.color }}</td>
+                                    <td>{{ veh.tipo }}</td>
+                                    <td>{{ veh.uso }}</td>
+                                    <td>{{ veh.n_puestos }}</td>
+                                    <td>{{ veh.capa_tanque_gasolina }} lts</td>
+
+                                    <td>
+                                        <div class="btn-group">
+
+                                            <a href="{% url 'vehiculosapp:vehiculos_update' veh.id %}"
+                                               class="btn btn-info"
+                                               title="Editar solicitud"><i class="fa fa-edit"></i></a>
+                                            <a href="{% url 'vehiculosapp:vehiculos_view' veh.id %}"
+                                               title="Ver solicitud"
+                                               class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                            <a href="{% url 'vehiculosapp:vehiculos_delete' veh.id %}"
+                                               title="Eliminar"
+                                               class="btn btn-warning"><i class="fa fa-remove"></i></a>
+
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}

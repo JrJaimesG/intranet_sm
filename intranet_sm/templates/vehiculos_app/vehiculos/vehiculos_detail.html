@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Principal{% endblock %}
+
+{% block page_title %}Principal{% endblock page_title %}
+
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+
+
+
+  <div class="row">
+        <div class="col-md-12">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+
+              <h3 class="profile-username text-center">{{ object.get_full_name }}</h3>
+
+              <p class="text-muted text-center">{{ object.cargo }}</p>
+
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b>Id: </b> {{ object.id }}
+                </li>
+                <li class="list-group-item">
+                  <b>Placa: </b> {{ object.placa}}
+                </li>
+                <li class="list-group-item">
+                  <b>Modelo: </b> {{ object.modelo}}
+                </li>
+                <li class="list-group-item">
+                  <b>Color: </b> {{ object.color}}
+                </li>
+                <li class="list-group-item">
+                  <b>Tipo de vehiculo: </b> {{ object.tipo}}
+                </li>
+                <li class="list-group-item">
+                  <b>Uso: </b> {{ object.uso}}
+                </li>
+                <li class="list-group-item">
+                  <b>Número de puestos: </b> {{ object.n_puestos}}
+                </li>
+                <li class="list-group-item">
+                  <b>Capacidad del tanque de la gasolina: </b> {{ object.capa_tanque_gasolina}}
+                </li>
+
+              </ul>
+              <a href="{% url 'vehiculosapp:vehiculos_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Regresar al listado</a>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+  </div>
+{% endblock content %}

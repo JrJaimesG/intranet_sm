@@ -1,0 +1,22 @@
+
+<li class="treeview">
+  <a href="#">
+    <i class="fa fa-folder"></i> <span>Solicitudes</span>
+    <span class="pull-right-container">
+      <i class="fa fa-angle-left pull-right"></i>
+    </span>
+  </a>
+  <ul class="treeview-menu">
+    <li><a href="{% url 'vehiculosapp:solicitudes_list' %}"><i class="fa fa-circle-o"></i>Listado</a></li>
+    <li><a href="{% url 'vehiculosapp:solicitudes_list' %}"><i class="fa fa-circle-o"></i>Mantenimiento</a>
+      <ul class="treeview-menu">
+        <li><a href="{% url 'vehiculosapp:vehiculos_list' %}"><i class="fa fa-circle-o"></i>Vehiculos</a>
+        <li><a href="{% url 'vehiculosapp:choferes_list' %}"><i class="fa fa-circle-o"></i>Choferes</a>
+        <li><a href="{% url 'vehiculosapp:asignaciones_list' %}"><i class="fa fa-circle-o"></i>Asignacion</a>
+        <li><a href="{% url 'vehiculosapp:bitacoras_list' %}"><i class="fa fa-circle-o"></i>Bitacora</a>
+      </ul>
+    </li>
+  </ul>
+</li>
+
+

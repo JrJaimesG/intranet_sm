@@ -61,6 +61,7 @@ LOCAL_APPS = [
     # custom users app
     'intranet_sm.users.apps.UsersConfig',
     'intranet_sm.administrator_app.apps.AdministratorAppConfig',
+    'intranet_sm.vehiculos_app.apps.VehiculosAppConfig',
     # Your stuff: custom apps go here
 ]
 
@@ -115,7 +116,14 @@ MANAGERS = ADMINS
 # ------------------------------------------------------------------------------
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres://intranet_sm:intranetSM23@localhost/intranet_sm'),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'intranet_sm',
+        'USER': 'postgres',
+        'PASSWORD': 'rkjj220808',
+        'HOST': 'localhost',
+        'PORT': 5433,
+    }
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 

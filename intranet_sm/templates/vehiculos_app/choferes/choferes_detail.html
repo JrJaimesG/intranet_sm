@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}Principal{% endblock %}
+
+{% block page_title %}Principal{% endblock page_title %}
+
+
+{% block css %}
+{% endblock css %}
+
+{% block content %}
+
+
+
+  <div class="row">
+        <div class="col-md-12">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+
+              <h3 class="profile-username text-center">{{ object.get_full_name }}</h3>
+
+              <p class="text-muted text-center">{{ object.cargo }}</p>
+
+              <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b>Id: </b> {{ object.id }}
+                </li>
+                <li class="list-group-item">
+                  <b>Chofer: </b> {{ object.empleado }}
+                </li>
+                <li class="list-group-item">
+                  <b>¿Posee licencia para manejar motocicleta?: </b> {{ object.licencia_moto }}
+                </li>
+                <li class="list-group-item">
+                  <b>Tipo de licencia: </b> {{ object.licencia }}
+                </li>
+                <li class="list-group-item">
+                  <b>Fecha de vencimiento de la licencia: </b> {{ object.venc_licencia }}
+                </li>
+                <li class="list-group-item">
+                  <b>¿Es activo?: </b> {{ object.activo }}
+                </li>
+                <li class="list-group-item">
+                  <b>Estado del Chofer: </b> {{ object.tipo_asignacion_chofer }}
+                </li>
+
+
+              </ul>
+              <a href="{% url 'vehiculosapp:choferes_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Regresar al listado</a>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+  </div>
+
+
+</div>
+{% endblock content %}
+

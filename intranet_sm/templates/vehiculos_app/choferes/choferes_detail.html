@@ -33,19 +33,45 @@
                   <b>Chofer: </b> {{ object.empleado }}
                 </li>
                 <li class="list-group-item">
-                  <b>¿Posee licencia para manejar motocicleta?: </b> {{ object.licencia_moto }}
+                  <b>¿Posee licencia para manejar motocicleta?: </b>
+                  {% if object.licencia_moto == 'True' %}
+                    Si
+                  {% else %}
+                    No
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
-                  <b>Tipo de licencia: </b> {{ object.licencia }}
+                  <b>Tipo de licencia: </b>
+                  {% if object.licencia == '3' %}
+                    Licencia de 3er grado
+                  {% elif object.licencia == '4' %}
+                    Licencia de 4to grado
+                  {% else %}
+                    Licencia de 5to grado
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
                   <b>Fecha de vencimiento de la licencia: </b> {{ object.venc_licencia }}
                 </li>
                 <li class="list-group-item">
-                  <b>¿Es activo?: </b> {{ object.activo }}
+                  <b>¿Es activo?: </b>
+                  {% if object.activo == 'True' %}
+                    No
+                  {% else %}
+                    Si
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
-                  <b>Estado del Chofer: </b> {{ object.tipo_asignacion_chofer }}
+                  <b>Estado del Chofer: </b>
+                  {% if object.tipo_asignacion_chofer == 'V' %}
+                    De Vacaciones
+                  {% elif object.tipo_asignacion_chofer == 'P' %}
+                    Dias Pendientes
+                  {% elif object.tipo_asignacion_chofer == 'R' %}
+                    De Reposo
+                  {% else %}
+                    Disponible
+                  {% endif %}
                 </li>
 
 

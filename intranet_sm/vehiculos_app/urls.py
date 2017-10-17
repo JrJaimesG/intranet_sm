@@ -102,7 +102,7 @@ urlpatterns = [
         name='asignaciones_list'
     ),
     url(
-        regex=r'^asignacion/create/$',
+        regex=r'^asignacion/create/(?P<pk>\d+)/$',
         view=asignaciones.AsignacionCreateView.as_view(),
         name='asignaciones_create'
     ),

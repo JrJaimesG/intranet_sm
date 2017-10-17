@@ -54,11 +54,33 @@
                                 <tr>
                                     <td>{{ cho.id }}</td>
                                     <td>{{ cho.empleado }}</td>
-                                    <td>{{ cho.licencia_moto }}</td>
-                                    <td>{{ cho.licencia }}</td>
+                                    {% if cho.licencia_moto == 'False' %}
+                                        <td>No</td>
+                                    {% else %}
+                                        <td>Si</td>
+                                    {% endif%}
+                                    {% if cho.licencia == '3' %}
+                                        <td>Licencia de 3er Grado</td>
+                                    {% elif cho.licencia == '4' %}
+                                        <td>Licencia de 4to Grado</td>
+                                    {% elif cho.licencia == '5' %}
+                                        <td>Licencia de 5to Grado</td>
+                                    {% endif %}
                                     <td>{{ cho.venc_licencia }}</td>
-                                    <td>{{ cho.activo }}</td>
-                                    <td>{{ cho.tipo_asignacion_chofer }}</td>
+                                    {% if cho.activo == 'False' %}
+                                        <td>No esta activo</td>
+                                    {% else %}
+                                        <td>Está activo</td>
+                                    {% endif %}
+                                    {% if cho.tipo_asignacion_chofer == 'V' %}
+                                        <td>De Vacaciones</td>
+                                    {% elif cho.tipo_asignacion_chofer == 'P' %}
+                                        <td>Dias Pendientes</td>
+                                    {% elif cho.tipo_asignacion_chofer == 'R' %}
+                                        <td>De Reposo</td>
+                                    {% else %}
+                                        <td>Disponible</td>
+                                    {% endif%}
 
                                     <td>
                                         <div class="btn-group">

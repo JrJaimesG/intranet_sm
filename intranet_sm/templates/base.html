@@ -395,7 +395,7 @@
                     {% endif %}
                 {% endfor %}
 
-                {% include "menu_solicitudes.html" %}
+                {% include "menu_vehiculos.html" %}
 
                 {% for group in user.groups.all %}
                     {% if group.name == 'Empleados' %}
@@ -454,6 +454,9 @@
             {% block content %}
                 <!-- start: PAGE CONTENT -->
                 <p>Bienvenidos a la intranet CIDA</p>
+                    <a href="{% url 'vehiculosapp:solicitudes_create' %}"
+                                               title="Agregar solicitud"
+                                               class="btn btn-info">Agregar nueva solicitud <i class="fa fa-plus"></i></a>
                 <!-- end: PAGE CONTENT-->
             {% endblock content %}
 

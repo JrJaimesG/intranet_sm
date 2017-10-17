@@ -38,9 +38,13 @@
                 <li class="list-group-item">
                   <b>Fecha de registro: </b> {{ object.fecha_reg }}
                 </li>
+                <li class="list-group-item">
+                  <b>Fecha de actualización: </b> {{ object.fecha_act }}
+                </li>
 
               </ul>
               <a href="{% url 'vehiculosapp:asignaciones_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Regresar al listado</a>
+              <a href="{% url 'vehiculosapp:asignaciones_create' %}" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir asignación</a>
             </div>
             <!-- /.box-body -->
           </div>

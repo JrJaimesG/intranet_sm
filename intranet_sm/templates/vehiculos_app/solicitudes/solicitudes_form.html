@@ -1,7 +1,13 @@
 {% extends "base.html" %}
+{% load staticfiles i18n %}
 {% load crispy_forms_tags %}
 
 {% block title %}Edición de la Solicitud{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'plugins\bootstrap-datepicker\dist\css\bootstrap-datepicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins\timepicker\bootstrap-timepicker.min.css' %}">
+{% endblock css %}
 
 {% block content-header %}
     <h1>
@@ -40,10 +46,38 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
 
 
 {% endblock %}
+
+{% block js %}
+
+    <script src="{% static 'plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'plugins/timepicker/bootstrap-timepicker.min.js' %}"></script>
+
+
+    <script>
+      jQuery(document).ready(function() {
+      
+        $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy',
+          autoclose: true,
+          keyboardNavigation : true ,
+          //daysOfWeekDisabled : [1],
+          //language: "es"
+        }).val();
+
+        //Timepicker
+        $('.timepicker').timepicker({
+            showInputs: false
+        })
+      
+
+      });
+
+    </script>
+
+{% endblock js %}

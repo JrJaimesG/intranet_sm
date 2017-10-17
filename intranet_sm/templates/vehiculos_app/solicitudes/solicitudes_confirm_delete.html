@@ -37,8 +37,12 @@
                     <table class="table table-bordered">
 
                         <tr>
-                            <td>Choferes</td>
+                            <td>Solicitante</td>
                             <td>{{object.empleado}}</td>
+                        </tr>
+                        <tr>
+                            <td>Actividad a realizar</td>
+                            <td>{{object.actividad_a_realizar}}</td>
                         </tr>
                         <tr>
                             <td>Destino</td>
@@ -72,14 +76,9 @@
 
 {% block js %}
 
-
-    <script src="{% static "js/regiones.js" %}"></script>
-
-
     <script>
       jQuery(document).ready(function() {
         Main.init();
-        Regiones.init();
       });
     </script>
 

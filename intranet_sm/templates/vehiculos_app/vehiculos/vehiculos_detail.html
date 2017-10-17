@@ -33,22 +33,37 @@
                   <b>Placa: </b> {{ object.placa}}
                 </li>
                 <li class="list-group-item">
+                  <b>Marca: </b> {{ object.marca}}
+                </li>
+                <li class="list-group-item">
                   <b>Modelo: </b> {{ object.modelo}}
                 </li>
                 <li class="list-group-item">
                   <b>Color: </b> {{ object.color}}
                 </li>
                 <li class="list-group-item">
-                  <b>Tipo de vehiculo: </b> {{ object.tipo}}
+                  <b>Tipo de vehiculo: </b>
+                  {% if object.tipo == 'P' %}
+                    Pick-up
+                  {% elif object.tipo == 'S' %}
+                    Sedan
+                  {% else %}
+                    Motocicleta
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
-                  <b>Uso: </b> {{ object.uso}}
+                  <b>Uso: </b>
+                  {% if object.uso == 'P' %}
+                    Particular
+                  {% else %}
+                    Carga
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
-                  <b>Número de puestos: </b> {{ object.n_puestos}}
+                  <b>Número de puestos: </b> {{ object.n_puestos}} puestos
                 </li>
                 <li class="list-group-item">
-                  <b>Capacidad del tanque de la gasolina: </b> {{ object.capa_tanque_gasolina}}
+                  <b>Capacidad del tanque de la gasolina: </b> {{ object.capa_tanque_gasolina}} lts
                 </li>
 
               </ul>

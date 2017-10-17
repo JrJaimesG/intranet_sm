@@ -29,7 +29,11 @@ class BitacoraCreateView(LoginRequiredMixin, CreateView):
 
     fields = [
         'asignacion',
-        'fecha_hora'
+        'fecha_hora',
+        'nivel_tanque_gasolina',
+        'kilometraje',
+        'observaciones',
+        'entrada_salida',
     ]
 
     model = Bitacora
@@ -47,13 +51,20 @@ class BitacoraCreateView(LoginRequiredMixin, CreateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:bitacoras_list')
+        return reverse('vehiculosapp:bitacoras_list')
 
 
 class BitacoraDetailView(LoginRequiredMixin, DetailView):
 
     fields = [
-        'bitacora',
+        'asignacion',
+        'fecha_hora',
+        'nivel_tanque_gasolina',
+        'kilometraje',
+        'observaciones',
+        'entrada_salida',
+        'fecha_reg',
+        'fecha_act',
     ]
 
     model = Bitacora
@@ -73,7 +84,12 @@ class BitacoraDetailView(LoginRequiredMixin, DetailView):
 class BitacoraUpdateView(LoginRequiredMixin, UpdateView):
 
     fields = [
-        'bitacora',
+        'asignacion',
+        'fecha_hora',
+        'nivel_tanque_gasolina',
+        'kilometraje',
+        'observaciones',
+        'entrada_salida',
     ]
 
     model = Bitacora
@@ -91,13 +107,19 @@ class BitacoraUpdateView(LoginRequiredMixin, UpdateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:bitacoras_list')
+        return reverse('vehiculosapp:bitacoras_list')
 
 
 class BitacoraDeleteView(LoginRequiredMixin, DeleteView):
 
     fields = [
-        'bitacora',
+        'asignacion',
+        'fecha_hora',
+        'nivel_tanque_gasolina',
+        'kilometraje',
+        'observaciones',
+        'entrada_salida',
+        'fecha_reg',
     ]
 
     model = Bitacora
@@ -115,4 +137,4 @@ class BitacoraDeleteView(LoginRequiredMixin, DeleteView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:bitacoras_list')
+        return reverse('vehiculosapp:bitacoras_list')

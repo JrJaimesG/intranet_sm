@@ -43,6 +43,7 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Placa</th>
+                                <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>Color</th>
                                 <th>Tipo</th>
@@ -55,11 +56,22 @@
                                 <tr>
                                     <td>{{ veh.id }}</td>
                                     <td>{{ veh.placa }}</td>
+                                    <td>{{ veh.marca }}</td>
                                     <td>{{ veh.modelo }}</td>
                                     <td>{{ veh.color }}</td>
-                                    <td>{{ veh.tipo }}</td>
-                                    <td>{{ veh.uso }}</td>
-                                    <td>{{ veh.n_puestos }}</td>
+                                    {% if veh.tipo == 'P' %}
+                                        <td>Pick-up</td>
+                                    {% elif veh.tipo == 'S' %}
+                                        <td>Sedan</td>
+                                    {% else %}
+                                        <td>Motocicleta</td>
+                                    {% endif %}
+                                    {% if veh.uso == 'C' %}
+                                        <td>Carga</td>
+                                    {% else %}
+                                        <td>Particular</td>
+                                    {% endif %}
+                                    <td>{{ veh.n_puestos }} puestos</td>
                                     <td>{{ veh.capa_tanque_gasolina }} lts</td>
 
                                     <td>

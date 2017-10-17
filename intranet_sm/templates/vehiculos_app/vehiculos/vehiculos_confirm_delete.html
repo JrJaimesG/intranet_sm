@@ -40,6 +40,18 @@
                             <td>Modelo</td>
                             <td>{{object.modelo}}</td>
                         </tr>
+                        <tr>
+                            <td>Tipo</td>
+                            {% if object.tipo == 'P' %}
+                            <td>Pick-up</td>
+                            {% elif object.tipo == 'S' %}
+                            <td>Sedan</td>
+                            {% else %}
+                            <td>Motocicleta</td>
+                            {% endif %}
+
+                        </tr>
+
 
                     </table>
 

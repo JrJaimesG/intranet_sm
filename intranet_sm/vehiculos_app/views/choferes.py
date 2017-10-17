@@ -28,7 +28,12 @@ class ChoferListView(LoginRequiredMixin, ListView):
 class ChoferCreateView(LoginRequiredMixin, CreateView):
 
     fields = [
-        'chofer',
+        'empleado',
+        'licencia_moto',
+        'licencia',
+        'venc_licencia',
+        'activo',
+        'tipo_asignacion_chofer',
     ]
 
     model = Chofer
@@ -46,13 +51,18 @@ class ChoferCreateView(LoginRequiredMixin, CreateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:choferes_list')
+        return reverse('vehiculosapp:choferes_list')
 
 
 class ChoferDetailView(LoginRequiredMixin, DetailView):
 
     fields = [
-        'chofer',
+        'empleado',
+        'licencia_moto',
+        'licencia',
+        'venc_licencia',
+        'activo',
+        'tipo_asignacion_chofer',
     ]
 
     model = Chofer
@@ -72,7 +82,12 @@ class ChoferDetailView(LoginRequiredMixin, DetailView):
 class ChoferUpdateView(LoginRequiredMixin, UpdateView):
 
     fields = [
-        'chofer',
+        'empleado',
+        'licencia_moto',
+        'licencia',
+        'venc_licencia',
+        'activo',
+        'tipo_asignacion_chofer',
     ]
 
     model = Chofer
@@ -90,15 +105,20 @@ class ChoferUpdateView(LoginRequiredMixin, UpdateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:choferes_list')
+        return reverse('vehiculosapp:choferes_list')
 
 
 class ChoferDeleteView(LoginRequiredMixin, DeleteView):
 
     fields = [
-        'chofer',
+        'empleado',
+        'licencia_moto',
+        'licencia',
+        'venc_licencia',
+        'activo',
+        'tipo_asignacion_chofer',
     ]
-
+    
     model = Chofer
     template_name = 'vehiculos_app/choferes/choferes_confirm_delete.html'
 
@@ -114,4 +134,4 @@ class ChoferDeleteView(LoginRequiredMixin, DeleteView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:choferes_list')
+        return reverse('vehiculosapp:choferes_list')

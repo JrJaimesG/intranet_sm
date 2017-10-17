@@ -36,19 +36,31 @@
                   <b>Fecha y hora: </b> {{ object.fecha_hora }}
                 </li>
                 <li class="list-group-item">
-                  <b>Nivel del tanque de la gasolina: </b> {{ object.nivel_tanque_gasolina }}
+                  <b>Nivel del tanque de la gasolina: </b>
+                  {% if object.nivel_tanque_gasolina == '1' %}
+                    Tanque lleno
+                  {% elif object.nivel_tanque_gasolina == '3/4' %}
+                    Tres cuartos de tanque
+                  {% elif object.nivel_tanque_gasolina == '1/2' %}
+                    Medio tanque
+                  {$ else $}
+                    Tanque vacio
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
                   <b>Kilometraje: </b> {{ object.kilometraje }}
                 </li>
                 <li class="list-group-item">
-                  <b>Observaciones: </b> {{ object.id }}
+                  <b>Observaciones: </b> {{ object.observaciones }}
                 </li>
                 <li class="list-group-item">
                   <b>¿Entrada o salida?: </b> {{ object.entrada_salida }}
                 </li>
                 <li class="list-group-item">
                   <b>Fecha de registro: </b> {{ object.fecha_reg }}
+                </li>
+                <li class="list-group-item">
+                  <b>Fecha de actualización: </b> {{ object.fecha_act }}
                 </li>
 
 

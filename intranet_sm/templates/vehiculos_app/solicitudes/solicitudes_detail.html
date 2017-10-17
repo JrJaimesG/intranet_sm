@@ -12,25 +12,21 @@
 
 {% block content %}
 
-
- <h2>ffffffff</h2>
   <div class="row">
         <div class="col-md-12">
 
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
-
-              <h3 class="profile-username text-center">{{ object.get_full_name }}</h3>
-
-              <p class="text-muted text-center">{{ object.cargo }}</p>
-
+              <div class="box-header">
+                <h3 class="box-title">Listado de Solicitudes de Vehiculos CIDA</h3>
+              </div>
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b>Id: </b> {{ object.id }}
                 </li>
                 <li class="list-group-item">
-                  <b>Chofer: </b> {{ object.empleado}}
+                  <b>Solicitante: </b> {{ object.empleado}}
                 </li>
                 <li class="list-group-item">
                   <b>Actividad a Realizar: </b> {{ object.actividad_a_realizar}}
@@ -39,19 +35,37 @@
                   <b>Destino: </b> {{ object.destino}}
                 </li>
                 <li class="list-group-item">
-                  <b>Salida: </b> {{ object.salida}}
+                  <b>Fecha de salida: </b> {{ object.salida_fecha}}
                 </li>
                 <li class="list-group-item">
-                  <b>Llegada aproximada: </b> {{ object.llegada_aprox}}
+                  <b>Hora de salida: </b> {{ object.salida_hora}}
+                </li>
+                <li class="list-group-item">
+                  <b>Fecha de llegada aproximada: </b> {{ object.llegada_fecha}}
+                </li>
+                <li class="list-group-item">
+                  <b>Hora de llegada aproximada: </b> {{ object.llegada_hora}}
                 </li>
                 <li class="list-group-item">
                   <b>Número de ocupantes: </b> {{ object.n_ocupantes}}
                 </li>
                 <li class="list-group-item">
-                  <b>Tipo de carretera: </b> {{ object.carretera}}
+                  <b>Tipo de carretera: </b>
+                  {% if object.carretera == 'P' %}
+                    Pavimentada
+                  {% else %}
+                    De Tierra
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
-                  <b>Tipo de carga: </b> {{ object.carga}}
+                  <b>Tipo de carga: </b>
+                  {% if object.carga == 'NO' %}
+                    No Aplica
+                  {% elif object.carga == 'ME' %}
+                    Menor o igual a un metro cuadrado
+                  {% else %}
+                    Mayor a un metro cuadrado
+                  {% endif %}
                 </li>
                 <li class="list-group-item">
                   <b>Observaciones: </b> {{ object.observaciones}}
@@ -59,9 +73,17 @@
                 <li class="list-group-item">
                   <b>Fecha de registro: </b> {{ object.fecha_reg}}
                 </li>
+                <li class="list-group-item">
+                  <b>Fecha de actualización: </b> {{ object.fecha_act}}
+                </li>
+                <li class="list-group-item">
+                  <b>Estado de la solicitud: </b>
+                  {{ object.estado_solicitud }}
+                </li>
 
               </ul>
               <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Regresar al listado</a>
+              <a href="{% url 'vehiculosapp:asignaciones_create' object.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir asignación</a>
             </div>
             <!-- /.box-body -->
           </div>

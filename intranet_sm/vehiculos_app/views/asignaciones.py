@@ -5,7 +5,7 @@ from django.views.generic import (
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from intranet_sm.vehiculos_app.models import Asignacion
+from intranet_sm.vehiculos_app.models import Asignacion, Solicitud
 
 
 class AsignacionListView(LoginRequiredMixin, ListView):
@@ -28,7 +28,8 @@ class AsignacionListView(LoginRequiredMixin, ListView):
 class AsignacionCreateView(LoginRequiredMixin, CreateView):
 
     fields = [
-        'asignacion',
+        'vehiculo',
+        'chofer',
     ]
 
     model = Asignacion
@@ -42,18 +43,28 @@ class AsignacionCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(AsignacionCreateView, self).get_context_data(**kwargs)
         context['page'] = self.page
+        context['solicitud'] = Solicitud.objects.get(pk=self.kwargs['pk'])
         return context
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:asignaciones_list')
+        return reverse('vehiculosapp:solicitudes_list')
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.solicitud_id = self.kwargs['pk']
+        self.object.save()
 
 
 class AsignacionDetailView(LoginRequiredMixin, DetailView):
 
     fields = [
-        'asignacion',
+        'vehiculo',
+        'chofer',
+        'fecha_reg',
+        'fecha_act',
     ]
+
 
     model = Asignacion
     template_name = 'vehiculos_app/asignaciones/asignaciones_detail.html'
@@ -72,9 +83,10 @@ class AsignacionDetailView(LoginRequiredMixin, DetailView):
 class AsignacionUpdateView(LoginRequiredMixin, UpdateView):
 
     fields = [
-        'asignacion',
+        'vehiculo',
+        'chofer',
     ]
-
+    
     model = Asignacion
     template_name = 'vehiculos_app/asignaciones/asignaciones_form.html'
 
@@ -90,13 +102,15 @@ class AsignacionUpdateView(LoginRequiredMixin, UpdateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:asignaciones_list')
+        return reverse('vehiculosapp:asignaciones_list')
 
 
 class AsignacionDeleteView(LoginRequiredMixin, DeleteView):
 
     fields = [
-        'asignacion',
+        'vehiculo',
+        'chofer',
+        'fecha_reg',
     ]
 
     model = Asignacion
@@ -114,4 +128,4 @@ class AsignacionDeleteView(LoginRequiredMixin, DeleteView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('administrator:asignaciones_list')
+        return reverse('vehiculosapp:asignaciones_list')

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.views.generic import (
     DetailView, ListView, RedirectView,
@@ -6,6 +8,7 @@ from django.views.generic import (
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from intranet_sm.vehiculos_app.models import Solicitud
+from intranet_sm.vehiculos_app.forms.solicitudes_form import SolicitudForm
 
 
 class SolicitudListView(LoginRequiredMixin, ListView):
@@ -27,28 +30,16 @@ class SolicitudListView(LoginRequiredMixin, ListView):
 
 class SolicitudCreateView(LoginRequiredMixin, CreateView):
 
-    fields = [
-        'empleado',
-        'actividad_a_realizar',
-        'destino',
-        'salida',
-        'llegada_aprox',
-        'n_ocupantes',
-        'carretera',
-        'carga',
-        'observaciones',
-        'estado_solicitud',
-        'fecha_reg',
-        'fecha_act',
-    ]
-
     model = Solicitud
+    form_class = SolicitudForm
     template_name = 'vehiculos_app/solicitudes/solicitudes_form.html'
 
     page = {
         'title': 'Administrador',
         'subtitle': 'Creación de la Solicitud'
     }
+
+    #success_url = 'vehiculosapp:solicitudes_list'
 
     def get_context_data(self, **kwargs):
         context = super(SolicitudCreateView, self).get_context_data(**kwargs)
@@ -59,6 +50,20 @@ class SolicitudCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('vehiculosapp:solicitudes_list')
 
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.empleado = self.request.user.id
+        self.object.estado_solicitud = "N"
+        self.object.save()
+
+        #messages.add_message(self.request,
+        #                     messages.SUCCESS, 'Se ha creado la cuenta del empleado')
+
+        #super(SolicitudCreateView, self).form_valid(form)
+
+        #return redirect(self.success_url)
+        return super(SolicitudCreateView, self).form_valid(form)
+
 
 class SolicitudDetailView(LoginRequiredMixin, DetailView):
 
@@ -66,8 +71,10 @@ class SolicitudDetailView(LoginRequiredMixin, DetailView):
         'empleado',
         'actividad_a_realizar',
         'destino',
-        'salida',
-        'llegada_aprox',
+        'salida_fecha',
+        'salida_hora',
+        'llegada_fecha',
+        'llegada_hora',
         'n_ocupantes',
         'carretera',
         'carga',
@@ -97,15 +104,15 @@ class SolicitudUpdateView(LoginRequiredMixin, UpdateView):
         'empleado',
         'actividad_a_realizar',
         'destino',
-        'salida',
-        'llegada_aprox',
+        'salida_fecha',
+        'salida_hora',
+        'llegada_fecha',
+        'llegada_hora',
         'n_ocupantes',
         'carretera',
         'carga',
         'observaciones',
         'estado_solicitud',
-        'fecha_reg',
-        'fecha_act',
     ]
 
     model = Solicitud
@@ -132,8 +139,10 @@ class SolicitudDeleteView(LoginRequiredMixin, DeleteView):
         'empleado',
         'actividad_a_realizar',
         'destino',
-        'salida',
-        'llegada_aprox',
+        'salida_fecha',
+        'salida_hora',
+        'llegada_fecha',
+        'llegada_hora',
         'n_ocupantes',
         'carretera',
         'carga',

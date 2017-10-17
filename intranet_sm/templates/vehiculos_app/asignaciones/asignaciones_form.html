@@ -24,8 +24,72 @@
                 <!-- /.box-header -->
                 <!-- form start -->
 
+            <ul class="list-group list-group-unbordered">
+                <li class="list-group-item">
+                  <b>Id: </b> {{ solicitud.id }}
+                </li>
+                <li class="list-group-item">
+                  <b>Solicitante: </b> {{ solicitud.empleado}}
+                </li>
+                <li class="list-group-item">
+                  <b>Actividad a Realizar: </b> {{ solicitud.actividad_a_realizar}}
+                </li>
+                <li class="list-group-item">
+                  <b>Destino: </b> {{ solicitud.destino}}
+                </li>
+                <li class="list-group-item">
+                  <b>Fecha de salida: </b> {{ solicitud.salida_fecha}}
+                </li>
+                <li class="list-group-item">
+                  <b>Hora de salida: </b> {{ solicitud.salida_hora}}
+                </li>
+                <li class="list-group-item">
+                  <b>Fecha de llegada aproximada: </b> {{ solicitud.llegada_fecha}}
+                </li>
+                <li class="list-group-item">
+                  <b>Hora de llegada aproximada: </b> {{ solicitud.llegada_hora}}
+                </li>
+                <li class="list-group-item">
+                  <b>Número de ocupantes: </b> {{ solicitud.n_ocupantes}}
+                </li>
+                <li class="list-group-item">
+                  <b>Tipo de carretera: </b>
+                  {% if solicitud.carretera == 'P' %}
+                    Pavimentada
+                  {% else %}
+                    De Tierra
+                  {% endif %}
+                </li>
+                <li class="list-group-item">
+                  <b>Tipo de carga: </b>
+                  {% if solicitud.carga == 'NO' %}
+                    No Aplica
+                  {% elif solicitud.carga == 'ME' %}
+                    Menor o igual a un metro cuadrado
+                  {% else %}
+                    Mayor a un metro cuadrado
+                  {% endif %}
+                </li>
+                <li class="list-group-item">
+                  <b>Observaciones: </b> {{ solicitud.observaciones}}
+                </li>
+                <li class="list-group-item">
+                  <b>Fecha de registro: </b> {{ solicitud.fecha_reg}}
+                </li>
+                <li class="list-group-item">
+                  <b>Fecha de actualización: </b> {{ solicitud.fecha_act}}
+                </li>
+                <li class="list-group-item">
+                  <b>Estado de la solicitud: </b>
+                  {{ solicitud.estado_solicitud }}
+                </li>
+
+            </ul>
+
                 <div class="box-body">
                     <form role="form"  method="post" action="" enctype="multipart/form-data">
+                        <input type="hidden" name="pksolicitud" value="{{ solicitud.id }}">
+
                         {% csrf_token %}
                         {{ form|crispy }}
                         <div class="control-group">

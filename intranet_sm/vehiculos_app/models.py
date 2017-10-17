@@ -72,18 +72,19 @@ class Solicitud(models.Model):
     actividad_a_realizar = models.CharField(
         'Actividad a realizar', max_length=50)
     destino = models.CharField('Destino', max_length=50)
-    salida = models.DateTimeField('Fecha y hora de salida', blank=True)
-    llegada_aprox = models.DateTimeField(
-        'Fecha y hora de llegada aproximada', blank=True)
+    salida_fecha = models.DateField('Fecha de salida', blank=True, null=True)
+    salida_hora = models.TimeField('Hora de salida', blank=True, null=True)
+    llegada_fecha = models.DateField ('Fecha de llegada aproximada', blank=True, null=True)
+    llegada_hora = models.TimeField('Hora de llegada', null=True, blank=True)
     n_ocupantes = models.IntegerField('Numero de ocupantes del vehiculo')
     carretera = models.CharField(
         max_length=12, choices=CARRETERA_CHOICES, default='P')
     carga = models.CharField(
         max_length=40, choices=CARGA_CHOICES, default='NO')
-    observaciones = models.TextField('Observaciones de la solicitud')
+    observaciones = models.TextField('Observaciones de la solicitud', blank=True, null=True)
     estado_solicitud = models.CharField('Estado de la solicitud', choices=ESTADO_CHOICES, default='N', max_length=20)
-    fecha_reg = models.DateTimeField()
-    fecha_act = models.DateTimeField()
+    fecha_reg = models.DateTimeField(auto_now_add=True)
+    fecha_act = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ["fecha_reg"]
@@ -95,7 +96,8 @@ class Solicitud(models.Model):
 
 class Vehiculo(models.Model):
     placa = models.CharField('Placa', max_length=10, unique=True)
-    modelo = models.CharField('Modelo del Vehículo', max_length=10)
+    marca = models.CharField('Marca del carro', max_length=20, default='')
+    modelo = models.CharField('Modelo del Vehículo', max_length=20)
     color = models.CharField('Color del Vehículo', max_length=20)
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES, default='S')
     uso = models.CharField(max_length=11, choices=USO_CHOICES, default='P')
@@ -126,6 +128,7 @@ class Chofer(models.Model):
 
 
 class Asignacion(models.Model):
+    solicitud = models.OneToOneField(Solicitud, default='1')
     vehiculo = models.ForeignKey(Vehiculo)
     chofer = models.ForeignKey(Chofer)
     fecha_reg = models.DateTimeField(auto_now_add=True)

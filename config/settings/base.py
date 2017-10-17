@@ -118,7 +118,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'intranet_sm',
+        'NAME': 'intranet_sm2',
         'USER': 'postgres',
         'PASSWORD': 'rkjj220808',
         'HOST': 'localhost',

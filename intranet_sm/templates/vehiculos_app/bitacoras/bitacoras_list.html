@@ -53,13 +53,25 @@
                             </tr>
                             {% for bit in bitacoras_list %}
                                 <tr>
-                                    <td>{{ asi.id }}</td>
+                                    <td>{{ bit.id }}</td>
                                     <td>{{ bit.asignacion }}</td>
                                     <td>{{ bit.fecha_hora }}</td>
-                                    <td>{{ bit.nivel_tanque_gasolina }}</td>
-                                    <td>{{ bit.kilometraje }}</td>
+                                    {% if bit.nivel_tanque_gasolina == '1' %}
+                                        <td>Tanque lleno</td>
+                                    {% elif bit.nivel_tanque_gasolina == '3/4' %}
+                                        <td>Tres cuartos de tanque</td>
+                                    {% elif bit.nivel_tanque_gasolina == '1/2' %}
+                                        <td>Medio Tanque</td>
+                                    {% else %}
+                                        <td>Tanque vacío</td>
+                                    {% endif %}
+                                    <td>{{ bit.kilometraje }} km</td>
                                     <td>{{ bit.observaciones }}</td>
-                                    <td>{{ bit.entrada_salida }}</td>
+                                    {% if bit.entrada_salida == 'E' %}
+                                        <td>Entrada</td>
+                                    {% else %}
+                                        <td>Salida</td>
+                                    {% endif %}
                                     <td>{{ bit.fecha_reg }}</td>
 
                                     <td>

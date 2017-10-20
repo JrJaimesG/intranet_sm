@@ -3,7 +3,7 @@ from functools import partial
 from intranet_sm.vehiculos_app.models import Solicitud
 
 DateInput = partial(forms.DateInput, {'class': 'datepicker'})
-TimeInput = partial(forms.TimeInput, {'class': 'timepicker'})
+TimeInput = partial(forms.TimeInput, {'class': 'TimePickerWidget'})
 
 '''
 class TimePickerWidget(forms.TimeInput):                                                  
@@ -26,9 +26,9 @@ class SolicitudForm(forms.ModelForm):
          widgets = {
             'salida_fecha': forms.DateInput(format=('%d/%m/%Y'), attrs={'class': 'datepicker', 'placeholder': 'Seleccione una fecha'}),
             #'salida_hora': forms.TimeField(format=('%I:%M %p'), widget=TimePickerWidget(format='%I:%M %p')),
-            #'salida_hora': forms.TimeInput(format=('%I:%M %p'), attrs={'class': 'timepicker'}),
+            'salida_hora': forms.TimeInput(format=('%I:%M %p'), attrs={'class': 'TimePickerWidget'}),
             'llegada_fecha': forms.DateInput(format=('%d/%m/%Y'), attrs={'class': 'datepicker', 'placeholder': 'Seleccione una fecha'}),
-            'llegada_hora': forms.TimeInput(attrs={'class': 'timepicker'}),
+            'llegada_hora': forms.TimeInput(attrs={'class': 'TimePickerWidget'}),
         }
 
 '''

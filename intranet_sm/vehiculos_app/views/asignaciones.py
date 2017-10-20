@@ -53,7 +53,10 @@ class AsignacionCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.solicitud_id = self.kwargs['pk']
+        #self.object.solicitud_id = 10
         self.object.save()
+
+        return super(AsignacionCreateView, self).form_valid(form)
 
 
 class AsignacionDetailView(LoginRequiredMixin, DetailView):

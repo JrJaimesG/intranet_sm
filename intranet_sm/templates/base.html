@@ -397,6 +397,8 @@
 
                 {% include "menu_vehiculos.html" %}
 
+                {% include "menu_usuarios.html" %}
+
                 {% for group in user.groups.all %}
                     {% if group.name == 'Empleados' %}
                         {% include "menu_users.html" %}

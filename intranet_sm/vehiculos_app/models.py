@@ -61,8 +61,8 @@ NIVEL_CHOICES = (
 
 ESTADO_CHOICES = (
     ('N', 'Nueva'),
-    ('P', 'Por ejecutar'),
-    ('E', 'Ejecutándose'),
+    ('P', 'Asignada'),
+    ('E', 'En proceso'),
     ('A', 'Anulada'),
     ('F', 'Finalizada'),
 )
@@ -128,7 +128,7 @@ class Chofer(models.Model):
 
 
 class Asignacion(models.Model):
-    solicitud = models.OneToOneField(Solicitud, default='1')
+    solicitud = models.ForeignKey(Solicitud, default='1')
     vehiculo = models.ForeignKey(Vehiculo)
     chofer = models.ForeignKey(Chofer)
     fecha_reg = models.DateTimeField(auto_now_add=True)

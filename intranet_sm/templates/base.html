@@ -395,7 +395,13 @@
                     {% endif %}
                 {% endfor %}
 
-                {% include "menu_vehiculos.html" %}
+
+                {% for group in user.groups.all %}
+                    {% if group.name == 'Transporte' %}
+                        {% include "menu_vehiculos.html" %}
+                    {% endif %}
+                {% endfor %}
+                
 
                 {% include "menu_usuarios.html" %}
 

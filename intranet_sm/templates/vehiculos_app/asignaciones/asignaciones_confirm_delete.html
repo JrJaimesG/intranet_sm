@@ -37,6 +37,10 @@
                     <table class="table table-bordered">
 
                         <tr>
+                            <td>Solicitud: </td>
+                            <td>{{solicitud.actividad_a_realizar}}</td>
+                        </tr>
+                        <tr>
                             <td>Vehiculo</td>
                             <td>{{object.vehiculo}}</td>
                         </tr>
@@ -55,7 +59,7 @@
 
                     <a href="" onclick="document.forms[0].submit();return false;" class="btn btn btn-danger">
                     <i class="fa fa-trash-o"></i> Eliminar</a>
-                    <a href="{% url 'vehiculosapp:asignaciones_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Cancelar</a>
+                    <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Cancelar</a>
 
                 </div>
 

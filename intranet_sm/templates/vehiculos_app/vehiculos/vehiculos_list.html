@@ -63,8 +63,10 @@
                                         <td>Pick-up</td>
                                     {% elif veh.tipo == 'S' %}
                                         <td>Sedan</td>
-                                    {% else %}
+                                    {% elif veh.tipo == 'M' %}
                                         <td>Motocicleta</td>
+                                    {% else %}
+                                        <td>Hatchback</td>
                                     {% endif %}
                                     {% if veh.uso == 'C' %}
                                         <td>Carga</td>

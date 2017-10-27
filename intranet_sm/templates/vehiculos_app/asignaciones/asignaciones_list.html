@@ -34,10 +34,6 @@
                     <!-- /.box-header -->
                     <div class="box-body table-responsive ">
 
-                        <a href="{% url 'vehiculosapp:asignaciones_create' %}"
-                                               title="Agregar asignacion"
-                                               class="btn btn-info">Agregar asignacion <i class="fa fa-plus"></i></a>
-
                         </br></br>
                         <table class="table table-hover">
                             <tr>
@@ -45,7 +41,6 @@
                                 <th>Vehiculo</th>
                                 <th>Chofer</th>
                                 <th>Fecha de registro</th>
-                                <th>Acción</th>
                             </tr>
                             {% for asi in asignaciones_list %}
                                 <tr>
@@ -53,24 +48,6 @@
                                     <td>{{ asi.vehiculo }}</td>
                                     <td>{{ asi.chofer }}</td>
                                     <td>{{ asi.fecha_reg }}</td>
-
-                                    <td>
-                                        <div class="btn-group">
-
-                                            <a href="{% url 'vehiculosapp:asignaciones_update' asi.id %}"
-                                               class="btn btn-info"
-                                               title="Editar solicitud"><i class="fa fa-edit"></i></a>
-                                            <a href="{% url 'vehiculosapp:asignaciones_view' asi.id %}"
-                                               title="Ver solicitud"
-                                               class="btn btn-info"><i class="fa fa-eye"></i></a>
-                                            <a href="{% url 'vehiculosapp:asignaciones_delete' asi.id %}"
-                                               title="Eliminar"
-                                               class="btn btn-warning"><i class="fa fa-remove"></i></a>
-
-                                        </div>
-
-
-                                    </td>
                                 </tr>
                             {% endfor %}
                         </table>

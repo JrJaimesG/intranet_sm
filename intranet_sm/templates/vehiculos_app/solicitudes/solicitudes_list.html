@@ -43,11 +43,8 @@
                                 <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1" aria-label="REndering engine; activate to sort column descending" style="width: 130px;" aria-sort="ascending">Solicitante
                                 </th>
                                 <th>Actividad a realizar</th>
-                                <th>Destino</th>
                                 <th>Fecha de salida</th>
-                                <th>Hora de salida</th>
                                 <th>Fecha de llegada</th>
-                                <th>Hora de llegada</th>
                                 <th>Estado de la solicitud</th>
                                 <th>Acción</th>
                             </tr>
@@ -57,30 +54,46 @@
                                 <tr>
                                     <td>{{ sol.empleado }}</td>
                                     <td>{{ sol.actividad_a_realizar }}</td>
-                                    <td>{{ sol.destino }}</td>
                                     <td>{{ sol.salida_fecha }}</td>
-                                    <td>{{ sol.salida_hora }}</td>
                                     <td>{{ sol.llegada_fecha }}</td>
-                                    <td>{{ sol.llegada_hora }}</td>
-                                    <td><span class="label label-success">Approved</span></td>
-
                                     <td>
-                                        <div class="btn-group">
-
-                                            <a href="{% url 'vehiculosapp:solicitudes_update' sol.id %}"
-                                               class="btn btn-info"
-                                               title="Editar solicitud"><i class="fa fa-edit"></i></a>
-                                            <a href="{% url 'vehiculosapp:solicitudes_view' sol.id %}"
-                                               title="Ver solicitud"
-                                               class="btn btn-info"><i class="fa fa-eye"></i></a>
-                                            <a href="{% url 'vehiculosapp:solicitudes_delete' sol.id %}"
-                                               title="Eliminar"
-                                               class="btn btn-warning"><i class="fa fa-remove"></i></a>
-
-                                        </div>
-
+                                        {% if sol.estado_solicitud == 'N' %}
+                                            <span class="label label-success">Nuevo</span><br>
+                                        {% elif sol.estado_solicitud == 'A' %}
+                                            <span class="label label-primary">Asignado</span><br>
+                                            <b>Asignación:</b><br>
+                                            {{sol.get_asignacion|safe}}
+                                        {% elif sol.estado_solicitud == 'E' %}
+                                            <span class="label label-info">En Proceso</span><br>
+                                            <b>Asignación:</b><br>
+                                            {{sol.get_asignacion|safe}}
+                                            <br><b>Bitácoras:</b><br>
+                                            
+                                                {{sol.get_bitacora|safe}}
+                                            
+                                        {% elif sol.estado_solicitud == 'AN' %}
+                                            <span class="label label-danger">Anulada</span><br>
+                                        {% elif sol.estado_solicitud == 'F' %}
+                                            <span class="label label-default">Finalizada</span><br>
+                                        {% endif %} 
 
                                     </td>
+                                            <td>
+                                                <div class="btn-group">
+
+                                                    <a href="{% url 'vehiculosapp:solicitudes_update' sol.id %}"
+                                                       class="btn btn-info"
+                                                       title="Editar solicitud"><i class="fa fa-edit"></i></a>
+                                                    <a href="{% url 'vehiculosapp:solicitudes_view' sol.id %}"
+                                                       title="Ver solicitud"
+                                                       class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                                    <a href="{% url 'vehiculosapp:solicitudes_delete' sol.id %}"
+                                                       title="Eliminar"
+                                                       class="btn btn-warning"><i class="fa fa-remove"></i></a>
+
+                                                </div>
+                                            </td>
+
                                 </tr>
                             {% endfor %}
                                 </tbody>
@@ -88,11 +101,8 @@
                                     <tr>
                                         <th>Solicitante</th>
                                         <th>Actividad a realizar</th>
-                                        <th>Destino</th>
                                         <th>Fecha de salida</th>
-                                        <th>Hora de salida</th>
                                         <th>Fecha de llegada</th>
-                                        <th>Hora de llegada</th>
                                         <th>Estado de la solicitud</th>
                                         <th>Acción</th>
                                     </tr>

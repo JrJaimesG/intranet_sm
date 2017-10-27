@@ -47,8 +47,10 @@
                     Pick-up
                   {% elif object.tipo == 'S' %}
                     Sedan
-                  {% else %}
+                  {% elif object.tipo == 'M' %}
                     Motocicleta
+                  {% else %}
+                    Hatchback
                   {% endif %}
                 </li>
                 <li class="list-group-item">

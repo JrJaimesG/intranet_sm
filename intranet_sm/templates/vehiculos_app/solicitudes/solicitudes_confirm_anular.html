@@ -51,14 +51,32 @@
                             <td>Fecha de Registro</td>
                             <td>{{object.fecha_reg}}</td>
                         </tr>
+                        {% if asignacion %}
+                            <tr>
+                                <td>Vehiculo Asignado</td>
+                                <td>{{asignacion.vehiculo}}</td>
+                            </tr>
+                            <tr>
+                                <td>Chofer Asignado</td>
+                                <td>{{asignacion.chofer}}</td>
+                            </tr>
+                        {% endif %}
+                        {% if bitacoras %}
+                            {% for bitacora in bitacoras %}
+                                <tr>
+                                    <td>Bitacora: Horas</td>
+                                    <td>{{bitacoras.hora}}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
 
                     </table>
 
-                    <p>¿ Seguro de eliminar este registro ?</p>
+                    <p>¿ Seguro que desea anular esta solicitud ?</p>
 
-                    <a href="" onclick="document.forms[0].submit();return false;" class="btn btn btn-danger">
-                    <i class="fa fa-trash-o"></i> Eliminar</a>
-                    <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Cancelar</a>
+                    <a href="{% url 'vehiculosapp:solicitudes_view' object.id %}" class="btn btn btn-danger">
+                    <i class="fa fa-trash-o"></i> Anular</a>
+                    <a href="{% url 'vehiculosapp:solicitudes_view' object.id %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Cancelar</a>
 
                 </div>
 

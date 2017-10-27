@@ -4,11 +4,15 @@ from django.views.generic import (
     UpdateView, CreateView, DeleteView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from braces.views import GroupRequiredMixin
 from intranet_sm.vehiculos_app.models import Vehiculo
 
 
-class VehiculoListView(LoginRequiredMixin, ListView):
+class VehiculoListView(GroupRequiredMixin, ListView):
+
+    #required
+    group_required = u'Transporte'
+    raise_exception = True
 
     model = Vehiculo
     template_name = 'vehiculos_app/vehiculos/vehiculos_list.html'

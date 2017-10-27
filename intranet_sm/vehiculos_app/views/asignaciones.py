@@ -48,12 +48,15 @@ class AsignacionCreateView(LoginRequiredMixin, CreateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('vehiculosapp:solicitudes_list')
+        #return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['solicitud_id']})
+        return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['solicitud_id']})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        solicitud = Solicitud.objects.get(pk=self.kwargs['pk'])
         self.object.solicitud_id = self.kwargs['pk']
-        #self.object.solicitud_id = 10
+        solicitud.estado_solicitud = "A"
+        solicitud.save()
         self.object.save()
 
         return super(AsignacionCreateView, self).form_valid(form)
@@ -101,11 +104,12 @@ class AsignacionUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(AsignacionUpdateView, self).get_context_data(**kwargs)
         context['page'] = self.page
+        context['solicitud'] = Solicitud.objects.get(pk=self.kwargs['solicitud_id'])
         return context
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('vehiculosapp:asignaciones_list')
+        return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['solicitud_id']})
 
 
 class AsignacionDeleteView(LoginRequiredMixin, DeleteView):
@@ -114,6 +118,7 @@ class AsignacionDeleteView(LoginRequiredMixin, DeleteView):
         'vehiculo',
         'chofer',
         'fecha_reg',
+        'fecha_act',
     ]
 
     model = Asignacion
@@ -127,8 +132,20 @@ class AsignacionDeleteView(LoginRequiredMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super(AsignacionDeleteView, self).get_context_data(**kwargs)
         context['page'] = self.page
+        context['solicitud'] = Solicitud.objects.get(pk=self.kwargs['solicitud_id'])
         return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        solicitud = Solicitud.objects.get(pk=self.kwargs['solicitud_id'])
+        print ("estado_solicitud: ", solicitud.estado_solicitud)
+        self.object.solicitud_id = self.kwargs['pk']
+        if solicitud.estado_solicitud == 'A':
+            solicitud.estado_solicitud = 'N'
+            solicitud.save()
+        self.object.save()
+        print ("estado_solicitud: despues ", solicitud.estado_solicitud)
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('vehiculosapp:asignaciones_list')
+        return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['solicitud_id']})

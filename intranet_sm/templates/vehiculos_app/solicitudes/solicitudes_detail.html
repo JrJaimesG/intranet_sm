@@ -19,12 +19,9 @@
           <div class="box box-primary">
             <div class="box-body box-profile">
               <div class="box-header">
-                <h3 class="box-title">Listado de Solicitudes de Vehiculos CIDA</h3>
+                <h3 class="box-title">Detalles de la Solicitud Nº: {{ object.id}}</h3>
               </div>
               <ul class="list-group list-group-unbordered">
-                <li class="list-group-item">
-                  <b>Id: </b> {{ object.id }}
-                </li>
                 <li class="list-group-item">
                   <b>Solicitante: </b> {{ object.empleado}}
                 </li>
@@ -78,12 +75,99 @@
                 </li>
                 <li class="list-group-item">
                   <b>Estado de la solicitud: </b>
-                  {{ object.estado_solicitud }}
+                    {% if object.estado_solicitud == 'N' %}
+                        Nuevo
+                    {% elif object.estado_solicitud == 'A' %}
+                        Asignado
+                    {% elif object.estado_solicitud == 'E' %}
+                        En Proceso
+                    {% elif object.estado_solicitud == 'AN' %}
+                        Anulada
+                    {% elif object.estado_solicitud == 'F' %}
+                       Finalizada
+                    {% endif %} 
                 </li>
+                {% if asignacion %}
+                <li class="list-group-item">
+                  <b>Vehiculo asignado: </b> 
+                  <br>
+                  {{ asignacion.vehiculo|safe}}
+                </li>
+                <li class="list-group-item">
+                  <b>Chofer asignado: </b> {{ asignacion.chofer|safe}}
+                </li>
+                {% endif %}
+                {% if bitacoras %}
+                <div class="box-header">
+                  <h4 class="box-title">Bitácoras</h4>
+                </div>
+                <div class="box-body table-responsive ">
+                  <table class="table table-hover">
+                      <tr>
+                          <th>Hora</th>
+                          <th>Nivel de tanque de gasolina</th>
+                          <th>Kilometraje</th>
+                          <th>Observaciones</th>
+                          <th>Entrada/Salida</th>
+                          <th>Acciones</th>
+                        </tr>
+                        {% for bitacora in bitacoras %}
+                            <tr>
+                                <td>{{ bitacora.hora}}</td>
+                                <td>{{ bitacora.nivel_tanque_gasolina }}</td>
+                                <td>{{ bitacora.kilometraje }}</td>
+                                <td>{{ bitacora.observaciones }}</td>
+                                <td>
+                                  {% if bitacora.entrada_salida == 'S' %}
+                                    Salida
+                                  {% elif bitacora.entrada_salida == 'E' %}
+                                    Entrada
+                                  {% endif %}
+                                </td>
+                                {% if not object.estado_solicitud == 'F' %}
+                                <td>
+                                  <div class="btn-group">
+                                    Coloque el boton para crear<a href="{% url 'vehiculosapp:bitacoras_create' object.id asignacion.id %}"
+                                       class="btn btn-info"
+                                       title="Editar solicitud"><i class="fa fa-edit"></i></a>
+                                    <a href="{% url 'vehiculosapp:bitacoras_delete' object.id asignacion.id bitacora.id %}"
+                                       title="Eliminar"
+                                       class="btn btn-danger"><i class="fa fa-remove"></i></a>
+                                  </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                  </table>
+                </div>
+                {% endif %}
 
               </ul>
-              <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Regresar al listado</a>
-              <a href="{% url 'vehiculosapp:asignaciones_create' object.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir asignación</a>
+              {% if object.estado_solicitud == 'F' %}
+                <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+              {% else %}
+                <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+                {% for group in user.groups.all %}
+                    {% if group.name == 'Transporte' %}
+                      {% if not asignacion %}
+                        <a href="{% url 'vehiculosapp:asignaciones_create' object.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir Asignación</a>
+                      {% else %}
+                        <a href="{% url 'vehiculosapp:asignaciones_update' object.id asignacion.id %}" class="btn btn-primary"><i class="fa fa-refresh"></i> Modificar Asignación</a>
+                        <a href="{% url 'vehiculosapp:asignaciones_delete' object.id asignacion.id %}" class="btn btn-primary"><i class="fa fa-close"></i> Eliminar Asignación</a>
+                        <a href="{% url 'vehiculosapp:bitacoras_create' object.id asignacion.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir Bitácora</a>
+                        no sirve el boton de modificacion de bitacoras
+                        {% comment %}
+                        {% if bitacoras %}
+                          <a href="{% url 'vehiculosapp:bitacoras_update' object.id asignacion.id bitacoras.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Modificar Bitácora</a>
+                        {% endif %}
+                        {% endcomment %}
+                      {% endif %}
+                      <a href="{% url 'vehiculosapp:solicitudes_anular' object.id %}" class="btn btn-danger"><i class="fa fa-ban"></i> Anular Solicitud</a>
+                    {% endif %}
+                {% endfor %}
+              {% endif %}
+
+
             </div>
             <!-- /.box-body -->
           </div>

@@ -19,6 +19,7 @@ TIPO_CHOICES = (
     ('P', 'Pick-up'),
     ('S', 'Sedan'),
     ('M', 'Motocicleta'),
+    ('H', 'Hatchback'),
 )
 
 USO_CHOICES = (
@@ -61,9 +62,9 @@ NIVEL_CHOICES = (
 
 ESTADO_CHOICES = (
     ('N', 'Nueva'),
-    ('P', 'Asignada'),
+    ('A', 'Asignada'),
     ('E', 'En proceso'),
-    ('A', 'Anulada'),
+    ('AN', 'Anulada'),
     ('F', 'Finalizada'),
 )
 
@@ -75,7 +76,7 @@ class Solicitud(models.Model):
     salida_fecha = models.DateField('Fecha de salida', blank=True, null=True)
     salida_hora = models.TimeField('Hora de salida', blank=True, null=True)
     llegada_fecha = models.DateField ('Fecha de llegada aproximada', blank=True, null=True)
-    llegada_hora = models.TimeField('Hora de llegada', null=True, blank=True)
+    llegada_hora = models.TimeField('Hora de llegada aproximada', null=True, blank=True)
     n_ocupantes = models.IntegerField('Numero de ocupantes del vehiculo')
     carretera = models.CharField(
         max_length=12, choices=CARRETERA_CHOICES, default='P')
@@ -86,12 +87,24 @@ class Solicitud(models.Model):
     fecha_reg = models.DateTimeField(auto_now_add=True)
     fecha_act = models.DateTimeField(auto_now=True)
 
+    def get_asignacion(self):
+        asignacion = Asignacion.objects.get(solicitud_id=self.pk)
+        if asignacion:
+            return u'%s' % (asignacion)
+
+    def get_bitacora(self):
+        asignacion = Asignacion.objects.get(solicitud_id=self.pk)
+        bitacora = Bitacora.objects.filter(asignacion_id=asignacion.id)
+        #if bitacora:
+        return u'%s' % (bitacora)
+
     class Meta:
         ordering = ["fecha_reg"]
         verbose_name_plural = "Solicitudes"
 
     def __str__(self):
-        return u'%s' % (self.empleado)
+    #    return u'%s' % (self.empleado)
+        return u'%s' % (self.estado_solicitud)
 
 
 class Vehiculo(models.Model):
@@ -105,7 +118,7 @@ class Vehiculo(models.Model):
     capa_tanque_gasolina = models.IntegerField('Cantidad en litros')
 
     def __str__(self):
-        return u'%s %s' % (self.placa, self.modelo)
+        return u'Placa: ''%s,''<br>Marca: ''%s,''<br>Modelo: ''%s,''' % (self.placa, self.marca, self.modelo)
 
 
 class Chofer(models.Model):
@@ -124,7 +137,7 @@ class Chofer(models.Model):
         verbose_name_plural = "Choferes"
 
     def __str__(self):
-        return u'%s' % (self.empleado)
+        return u'<br>Chofer: ''%s' % (self.empleado)
 
 
 class Asignacion(models.Model):
@@ -144,16 +157,16 @@ class Asignacion(models.Model):
 
 class Bitacora(models.Model):
     asignacion = models.ForeignKey(Asignacion)
-    fecha_hora = models.DateTimeField('Hora de llegada')
+    hora = models.TimeField('Hora', blank=True, null=True)
     nivel_tanque_gasolina = models.CharField(
         'Nivel del tanque de la gasolina', choices=NIVEL_CHOICES, max_length=10)
     kilometraje = models.FloatField(
         'Kilometraje', help_text='Cantidad en kilometros', max_length=10)
-    observaciones = models.TextField('Observaciones del viaje')
-    entrada_salida = models.CharField(
+    observaciones = models.TextField('Observaciones del viaje', blank=True)
+    entrada_salida = models.CharField('¿Entrada o Salida?', 
         max_length=20, choices=ENTRADA_SALIDA_CHOICES)
     fecha_reg = models.DateTimeField(auto_now_add=True)
     fecha_act = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return u'%s' % (self.asignacion)
+        return u'Hora: ''%s''<br>Entrada/Salida: ' '%s' % (self.hora, self.entrada_salida)

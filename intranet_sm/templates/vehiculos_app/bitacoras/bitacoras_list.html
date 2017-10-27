@@ -34,28 +34,25 @@
                     <!-- /.box-header -->
                     <div class="box-body table-responsive ">
 
-                        <a href="{% url 'vehiculosapp:bitacoras_create' %}"
-                                               title="Agregar bitacora"
-                                               class="btn btn-info">Agregar bitacora <i class="fa fa-plus"></i></a>
-
                         </br></br>
                         <table class="table table-hover">
                             <tr>
                                 <th>Id</th>
                                 <th>Asignacion</th>
-                                <th>Fecha y hora de llegada</th>
+                                <th>Hora de Salida</th>
+                                <th>Hora de Llegada</th>
                                 <th>Nivel del tanque de gasolina</th>
                                 <th>Kilometraje</th>
                                 <th>Observaciones</th>
                                 <th>Entrada o salida</th>
-                                <th>Fecha de registro</th>
                                 <th>Acción</th>
                             </tr>
                             {% for bit in bitacoras_list %}
                                 <tr>
                                     <td>{{ bit.id }}</td>
                                     <td>{{ bit.asignacion }}</td>
-                                    <td>{{ bit.fecha_hora }}</td>
+                                    <td>{{ bit.hora_salida }}</td>
+                                    <td>{{ bit.hora_llegada }}</td>
                                     {% if bit.nivel_tanque_gasolina == '1' %}
                                         <td>Tanque lleno</td>
                                     {% elif bit.nivel_tanque_gasolina == '3/4' %}
@@ -74,23 +71,6 @@
                                     {% endif %}
                                     <td>{{ bit.fecha_reg }}</td>
 
-                                    <td>
-                                        <div class="btn-group">
-
-                                            <a href="{% url 'vehiculosapp:bitacoras_update' bit.id %}"
-                                               class="btn btn-info"
-                                               title="Editar solicitud"><i class="fa fa-edit"></i></a>
-                                            <a href="{% url 'vehiculosapp:bitacoras_view' bit.id %}"
-                                               title="Ver solicitud"
-                                               class="btn btn-info"><i class="fa fa-eye"></i></a>
-                                            <a href="{% url 'vehiculosapp:bitacoras_delete' bit.id %}"
-                                               title="Eliminar"
-                                               class="btn btn-warning"><i class="fa fa-remove"></i></a>
-
-                                        </div>
-
-
-                                    </td>
                                 </tr>
                             {% endfor %}
                         </table>

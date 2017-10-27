@@ -79,11 +79,6 @@
                 <li class="list-group-item">
                   <b>Fecha de actualización: </b> {{ solicitud.fecha_act}}
                 </li>
-                <li class="list-group-item">
-                  <b>Estado de la solicitud: </b>
-                  {{ solicitud.estado_solicitud }}
-                </li>
-
             </ul>
 
                 <div class="box-body">
@@ -97,7 +92,7 @@
                                     <i class="icon-ok icon-white"></i> Grabar
                                 </button>
 
-                                <a href="{% url 'vehiculosapp:asignaciones_list' %}" class="btn btn-primary"><i
+                                <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i
                                         class="fa clip-arrow-left-3"></i> Cancelar</a>
                             </div>
                         </div>

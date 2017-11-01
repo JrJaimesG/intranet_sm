@@ -6,13 +6,38 @@ from django.views.generic import (
     UpdateView, CreateView, DeleteView
 )
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from braces.views import GroupRequiredMixin
 from intranet_sm.vehiculos_app.models import Solicitud, Asignacion, Bitacora
 from intranet_sm.users.models import Empleado
 from intranet_sm.vehiculos_app.forms.solicitudes_form import SolicitudForm
 
 
-class SolicitudListView(LoginRequiredMixin, ListView):
+class SolicitudListAdminView(GroupRequiredMixin, LoginRequiredMixin, ListView):
+
+    #required
+    group_required = u"Transporte"
+    raise_exception = True
+
+    model = Solicitud
+    template_name = 'vehiculos_app/solicitudes/solicitudes_list_admin.html'
+    context_object_name = 'solicitudes_list_admin'
+
+    page = {
+        'title': 'Administrador',
+        'subtitle': 'Solicitudes'
+    }
+
+
+    def get_context_data(self, **kwargs):
+        context = super(SolicitudListAdminView, self).get_context_data(**kwargs)
+        context['page'] = self.page
+        return context
+
+class SolicitudListView(GroupRequiredMixin, LoginRequiredMixin, ListView):
+
+    #required
+    group_required = u'Empleados'
+    raise_exception = True
 
     model = Solicitud
     template_name = 'vehiculos_app/solicitudes/solicitudes_list.html'
@@ -29,8 +54,14 @@ class SolicitudListView(LoginRequiredMixin, ListView):
         context['page'] = self.page
         return context
 
+    def get_queryset(self):
+        return Solicitud.objects.filter(empleado_id=self.request.user.id)
+
     #def get_query(self, **kwargs):
     #    return Solicitud.objects.annotate(chofer=F(asignacion__chofer))
+
+
+
 
 
 class SolicitudCreateView(LoginRequiredMixin, CreateView):
@@ -53,7 +84,9 @@ class SolicitudCreateView(LoginRequiredMixin, CreateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('vehiculosapp:solicitudes_view')
+        #return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['pk']})
+        return reverse('vehiculosapp:solicitudes_list')
+
 
     def form_valid(self, form):
         empleado = Empleado.objects.get(pk=self.request.user.id)
@@ -103,6 +136,7 @@ class SolicitudDetailView(LoginRequiredMixin, DetailView):
         context['page'] = self.page
         try:
             context['bitacoras'] = Bitacora.objects.filter(asignacion__solicitud_id=self.kwargs['pk'])
+            context['totalbitacoras'] = Bitacora.objects.filter(asignacion__solicitud_id=self.kwargs['pk']).count()
         except:
             context['bitacoras'] = ''
         
@@ -145,6 +179,7 @@ class SolicitudUpdateView(LoginRequiredMixin, UpdateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
+        #return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['pk']})
         return reverse('vehiculosapp:solicitudes_list')
 
 
@@ -182,7 +217,7 @@ class SolicitudDeleteView(LoginRequiredMixin, DeleteView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('vehiculosapp:solicitudes_list')
+        return reverse('dashboard')
 
 class SolicitudAnularView(LoginRequiredMixin, UpdateView):
 
@@ -216,14 +251,16 @@ class SolicitudAnularView(LoginRequiredMixin, UpdateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('vehiculosapp:solicitudes_view')
+        #return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['pk']})
+        return reverse('vehiculosapp:solicitudes_list')        
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        if asignacion:
-            asignacion = Asignacion.objects.get(solicitud_id=self.kwargs['pk']).delete()
-        if bitacora:
-            bitacora = Bitacora.objects.get(asignacion__solicitud_id=self.kwargs['pk']).delete()
+        print (self.object)
+        #if asignacion:
+        asignacion = Asignacion.objects.get(solicitud_id=self.kwargs['pk']).delete()
+        #if bitacora:
+        bitacora = Bitacora.objects.filter(asignacion__solicitud_id=self.kwargs['pk']).delete()
         if self.object.estado_solicitud == 'N':
             self.object.estado_solicitud = "AN"
         elif self.object.estado_solicitud == 'A':

@@ -22,7 +22,9 @@
         <div class="col-sm-12">
 
             <!-- start: FROM -->
-            <form action="" method="post">{% csrf_token %}
+            <form role="form"  method="post" action="" enctype="multipart/form-data">
+                {% csrf_token %}
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-external-link-square"></i>
@@ -74,8 +76,9 @@
 
                     <p>¿ Seguro que desea anular esta solicitud ?</p>
 
-                    <a href="{% url 'vehiculosapp:solicitudes_view' object.id %}" class="btn btn btn-danger">
-                    <i class="fa fa-trash-o"></i> Anular</a>
+                    <button class="btn btn-success" type="submit">
+                        <i class="icon-ok icon-white"></i> Anular
+                    </button>
                     <a href="{% url 'vehiculosapp:solicitudes_view' object.id %}" class="btn btn-primary"><i class="fa clip-arrow-left-3"></i> Cancelar</a>
 
                 </div>

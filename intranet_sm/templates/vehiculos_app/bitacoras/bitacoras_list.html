@@ -39,20 +39,17 @@
                             <tr>
                                 <th>Id</th>
                                 <th>Asignacion</th>
-                                <th>Hora de Salida</th>
-                                <th>Hora de Llegada</th>
+                                <th>Hora</th>
                                 <th>Nivel del tanque de gasolina</th>
                                 <th>Kilometraje</th>
                                 <th>Observaciones</th>
                                 <th>Entrada o salida</th>
-                                <th>Acción</th>
                             </tr>
                             {% for bit in bitacoras_list %}
                                 <tr>
                                     <td>{{ bit.id }}</td>
-                                    <td>{{ bit.asignacion }}</td>
-                                    <td>{{ bit.hora_salida }}</td>
-                                    <td>{{ bit.hora_llegada }}</td>
+                                    <td>{{ bit.asignacion|safe }}</td>
+                                    <td>{{ bit.hora}}</td>
                                     {% if bit.nivel_tanque_gasolina == '1' %}
                                         <td>Tanque lleno</td>
                                     {% elif bit.nivel_tanque_gasolina == '3/4' %}
@@ -69,7 +66,6 @@
                                     {% else %}
                                         <td>Salida</td>
                                     {% endif %}
-                                    <td>{{ bit.fecha_reg }}</td>
 
                                 </tr>
                             {% endfor %}

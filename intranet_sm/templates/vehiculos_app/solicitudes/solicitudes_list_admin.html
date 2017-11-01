@@ -38,7 +38,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for sol in solicitudes_list %}
+                            {% for sol in solicitudes_list_admin %}
                                 <tr>
                                     <td>{{ sol.empleado }}</td>
                                     <td>{{ sol.actividad_a_realizar }}</td>
@@ -74,23 +74,28 @@
                                         {% endif %}
                                         {% if sol.get_totalbitacoras == 2 %}
                                             <span class="label label-default">Finalizada</span><br>
-                                            {{sol.estado_solicitud}}
                                         {% endif %} 
-
                                     </td>
                                             <td>
                                                 <div class="btn-group">
                                                     {% if sol.estado_solicitud == 'N' %}
-                                                    <a href="{% url 'vehiculosapp:solicitudes_update' sol.id %}"
+                                                        <a href="{% url 'vehiculosapp:solicitudes_update' sol.id %}"
                                                        class="btn btn-info"
                                                        title="Editar solicitud"><i class="fa fa-edit"></i></a>
-                                                    <a href="{% url 'vehiculosapp:solicitudes_delete' sol.id %}"
+                                                        <a href="{% url 'vehiculosapp:solicitudes_view' sol.id %}"
+                                                       title="Ver solicitud"
+                                                       class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                                        <a href="{% url 'vehiculosapp:solicitudes_delete' sol.id %}"
+                                                       title="Eliminar"
+                                                       class="btn btn-warning"><i class="fa fa-remove"></i></a>
+                                                    {% else %}
+                                                        <a href="{% url 'vehiculosapp:solicitudes_view' sol.id %}"
+                                                       title="Ver solicitud"
+                                                       class="btn btn-info"><i class="fa fa-eye"></i></a>
+                                                        <a href="{% url 'vehiculosapp:solicitudes_delete' sol.id %}"
                                                        title="Eliminar"
                                                        class="btn btn-warning"><i class="fa fa-remove"></i></a>
                                                     {% endif %}
-                                                    <a href="{% url 'vehiculosapp:solicitudes_view' sol.id %}"
-                                                       title="Ver solicitud"
-                                                       class="btn btn-info"><i class="fa fa-eye"></i></a>
 
                                                 </div>
                                             </td>

@@ -49,7 +49,7 @@
                                 <th>Tipo</th>
                                 <th>Uso</th>
                                 <th>Número de puestos</th>
-                                <th>Capacidad del tanque de la gasolina</th>
+                                <th>Kilometraje</th>
                                 <th>Acción</th>
                             </tr>
                             {% for veh in vehiculos_list %}
@@ -65,8 +65,10 @@
                                         <td>Sedan</td>
                                     {% elif veh.tipo == 'M' %}
                                         <td>Motocicleta</td>
-                                    {% else %}
+                                    {% elif veh.tipo == 'H' %}
                                         <td>Hatchback</td>
+                                    {% else %}
+                                        <td>Camioneta</td>
                                     {% endif %}
                                     {% if veh.uso == 'C' %}
                                         <td>Carga</td>
@@ -74,7 +76,7 @@
                                         <td>Particular</td>
                                     {% endif %}
                                     <td>{{ veh.n_puestos }} puestos</td>
-                                    <td>{{ veh.capa_tanque_gasolina }} lts</td>
+                                    <td>{{ veh.kilometraje}}</td>
 
                                     <td>
                                         <div class="btn-group">

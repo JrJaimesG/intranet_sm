@@ -400,16 +400,15 @@
                     {% if group.name == 'Transporte' %}
                         {% include "menu_vehiculos.html" %}
                     {% endif %}
-                {% endfor %}
-                
+                {% endfor %}               
 
-                {% include "menu_usuarios.html" %}
-
+                {% comment %}
                 {% for group in user.groups.all %}
                     {% if group.name == 'Empleados' %}
-                        {% include "menu_users.html" %}
+                        {% include "menu_usuarios.html" %}
                     {% endif %}
                 {% endfor %}
+                {% endcomment %}
 
             </ul>
 

@@ -43,7 +43,7 @@ class AsignacionCreateView(LoginRequiredMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super(AsignacionCreateView, self).get_context_data(**kwargs)
         context['page'] = self.page
-        context['solicitud'] = Solicitud.objects.get(pk=self.kwargs['pk'])
+        context['solicitud'] = Solicitud.objects.get(pk=self.kwargs['solicitud_id'])
         return context
 
     # send the user back to their own page after a successful update
@@ -53,8 +53,8 @@ class AsignacionCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        solicitud = Solicitud.objects.get(pk=self.kwargs['pk'])
-        self.object.solicitud_id = self.kwargs['pk']
+        solicitud = Solicitud.objects.get(pk=self.kwargs['solicitud_id'])
+        self.object.solicitud_id = self.kwargs['solicitud_id']
         solicitud.estado_solicitud = "A"
         solicitud.save()
         self.object.save()

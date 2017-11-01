@@ -82,10 +82,11 @@
                   <b>Estado de la solicitud: </b> Asignada
                 </li>
                 <li class="list-group-item">
-                  <b>Vehiculo asignado: </b> {{ asignacion.vehiculo}}
+                  <b>Vehiculo asignado: </b><br>
+                  {{ asignacion.vehiculo|safe}}
                 </li>
                 <li class="list-group-item">
-                  <b>Chofer asignado: </b> {{ asignacion.chofer}}
+                  <b>Chofer asignado: </b> {{ asignacion.chofer|safe}}
                 </li>
 
             </ul>

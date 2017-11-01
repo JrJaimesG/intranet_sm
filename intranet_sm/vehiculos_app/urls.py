@@ -11,6 +11,11 @@ urlpatterns = [
         name='solicitudes_list'
     ),
     url(
+        regex=r'^solicitud/admin/$',
+        view=solicitudes.SolicitudListAdminView.as_view(),
+        name='solicitudes_list_admin'
+    ),
+    url(
         regex=r'^solicitud/create/$',
         view=solicitudes.SolicitudCreateView.as_view(),
         name='solicitudes_create'
@@ -109,7 +114,7 @@ urlpatterns = [
         name='asignaciones_list'
     ),
     url(
-        regex=r'^asignacion/create/(?P<pk>\d+)/$',
+        regex=r'^asignacion/create/(?P<solicitud_id>\d+)/$',
         view=asignaciones.AsignacionCreateView.as_view(),
         name='asignaciones_create'
     ),

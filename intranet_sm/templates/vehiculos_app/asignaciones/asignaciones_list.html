@@ -45,8 +45,8 @@
                             {% for asi in asignaciones_list %}
                                 <tr>
                                     <td>{{ asi.id }}</td>
-                                    <td>{{ asi.vehiculo }}</td>
-                                    <td>{{ asi.chofer }}</td>
+                                    <td>{{ asi.vehiculo|safe }}</td>
+                                    <td>{{ asi.chofer|safe }}</td>
                                     <td>{{ asi.fecha_reg }}</td>
                                 </tr>
                             {% endfor %}

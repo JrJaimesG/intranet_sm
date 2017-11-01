@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+c{% extends "base.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
@@ -109,13 +109,27 @@
                           <th>Kilometraje</th>
                           <th>Observaciones</th>
                           <th>Entrada/Salida</th>
-                          <th>Acciones</th>
+                          {% if not object.estado_solicitud == 'F' %}
+                            <th>Acciones</th>
+                          {% endif %}
                         </tr>
                         {% for bitacora in bitacoras %}
                             <tr>
                                 <td>{{ bitacora.hora}}</td>
-                                <td>{{ bitacora.nivel_tanque_gasolina }}</td>
-                                <td>{{ bitacora.kilometraje }}</td>
+                                <td>
+                                  {% if bitacora.nivel_tanque_gasolina == '1' %}
+                                    Tanque lleno
+                                  {% elif bitacora.nivel_tanque_gasolina == '3/4' %}
+                                    Tres cuartos de tanque
+                                  {% elif bitacora.nivel_tanque_gasolina == '1/2' %}
+                                    Medio tanque
+                                  {% elif bitacora.nivel_tanque_gasolina == '1/4' %}
+                                    Un cuarto de tanque
+                                  {% else %}
+                                    Tanque vacío
+                                  {% endif %}
+                                </td>
+                                <td>{{ bitacora.kilometraje }} km</td>
                                 <td>{{ bitacora.observaciones }}</td>
                                 <td>
                                   {% if bitacora.entrada_salida == 'S' %}
@@ -127,7 +141,7 @@
                                 {% if not object.estado_solicitud == 'F' %}
                                 <td>
                                   <div class="btn-group">
-                                    Coloque el boton para crear<a href="{% url 'vehiculosapp:bitacoras_create' object.id asignacion.id %}"
+                                    <a href="{% url 'vehiculosapp:bitacoras_update' object.id asignacion.id bitacora.id %}"
                                        class="btn btn-info"
                                        title="Editar solicitud"><i class="fa fa-edit"></i></a>
                                     <a href="{% url 'vehiculosapp:bitacoras_delete' object.id asignacion.id bitacora.id %}"
@@ -144,9 +158,21 @@
 
               </ul>
               {% if object.estado_solicitud == 'F' %}
-                <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+                {% for group in user.groups.all %}
+                  {% if group.name == 'Users' %}
+                    <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+                  {% else %}
+                    <a href="{% url 'vehiculosapp:solicitudes_list_admin' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+                  {% endif %}
+                {% endfor %}
               {% else %}
-                <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+                {% for group in user.groups.all %}
+                  {% if group.name == 'Users' %}
+                    <a href="{% url 'vehiculosapp:solicitudes_list' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+                  {% else %}
+                    <a href="{% url 'vehiculosapp:solicitudes_list_admin' %}" class="btn btn-primary"><i class="fa fa-reply"></i> Regresar al listado</a>
+                  {% endif %}
+                {% endfor %}
                 {% for group in user.groups.all %}
                     {% if group.name == 'Transporte' %}
                       {% if not asignacion %}
@@ -154,17 +180,21 @@
                       {% else %}
                         <a href="{% url 'vehiculosapp:asignaciones_update' object.id asignacion.id %}" class="btn btn-primary"><i class="fa fa-refresh"></i> Modificar Asignación</a>
                         <a href="{% url 'vehiculosapp:asignaciones_delete' object.id asignacion.id %}" class="btn btn-primary"><i class="fa fa-close"></i> Eliminar Asignación</a>
-                        <a href="{% url 'vehiculosapp:bitacoras_create' object.id asignacion.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir Bitácora</a>
-                        no sirve el boton de modificacion de bitacoras
-                        {% comment %}
-                        {% if bitacoras %}
-                          <a href="{% url 'vehiculosapp:bitacoras_update' object.id asignacion.id bitacoras.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Modificar Bitácora</a>
+                        {% if totalbitacoras < 2 %}
+                          <a href="{% url 'vehiculosapp:bitacoras_create' object.id asignacion.id %}" class="btn btn-primary"><i class="fa fa-plus"></i> Añadir Bitácora</a>
                         {% endif %}
-                        {% endcomment %}
                       {% endif %}
                       <a href="{% url 'vehiculosapp:solicitudes_anular' object.id %}" class="btn btn-danger"><i class="fa fa-ban"></i> Anular Solicitud</a>
                     {% endif %}
                 {% endfor %}
+              {% for group in user.groups.all %}
+                {% if group.name == 'Users' %}
+                  <a href="{% url 'vehiculosapp:solicitudes_update' object.id %}" class="btn btn-primary"><i class="fa fa-refresh"></i> Modificar Solicitud</a>
+                  {% if not asignacion %}
+                    <a href="{% url 'vehiculosapp:solicitudes_delete' object.id %}" class="btn btn-danger"><i class="fa fa-close"></i> Eliminar Solicitud</a>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
               {% endif %}
 
 

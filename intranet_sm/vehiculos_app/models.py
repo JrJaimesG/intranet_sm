@@ -20,6 +20,7 @@ TIPO_CHOICES = (
     ('S', 'Sedan'),
     ('M', 'Motocicleta'),
     ('H', 'Hatchback'),
+    ('C', 'Camioneta'),
 )
 
 USO_CHOICES = (
@@ -57,6 +58,7 @@ NIVEL_CHOICES = (
     ('1', 'Tanque lleno'),
     ('3/4', 'Tres cuartos de tanque'),
     ('1/2', 'Medio tanque'),
+    ('1/4', 'Un cuarto de tanque'),
     ('0', 'Tanque vacío'),
 )
 
@@ -96,7 +98,15 @@ class Solicitud(models.Model):
         asignacion = Asignacion.objects.get(solicitud_id=self.pk)
         bitacora = Bitacora.objects.filter(asignacion_id=asignacion.id)
         #if bitacora:
-        return u'%s' % (bitacora)
+        #    return u'%s' % (bitacora)
+        return bitacora
+
+    def get_totalbitacoras(self):
+        asignacion = Asignacion.objects.get(solicitud_id=self.pk)
+        bitacora = Bitacora.objects.filter(asignacion_id=asignacion.id).count()
+        #if bitacora:
+        #    return u'%s' % (bitacora)
+        return bitacora
 
     class Meta:
         ordering = ["fecha_reg"]
@@ -115,7 +125,9 @@ class Vehiculo(models.Model):
     tipo = models.CharField(max_length=10, choices=TIPO_CHOICES, default='S')
     uso = models.CharField(max_length=11, choices=USO_CHOICES, default='P')
     n_puestos = models.IntegerField('Numero de puestos del vehiculo')
-    capa_tanque_gasolina = models.IntegerField('Cantidad en litros')
+    kilometraje = models.FloatField(
+        'Kilometraje', help_text='Cantidad en kilometros', max_length=10, blank=True, null=True)
+    #capa_tanque_gasolina = models.IntegerField('Cantidad en litros')
 
     def __str__(self):
         return u'Placa: ''%s,''<br>Marca: ''%s,''<br>Modelo: ''%s,''' % (self.placa, self.marca, self.modelo)
@@ -169,4 +181,4 @@ class Bitacora(models.Model):
     fecha_act = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return u'Hora: ''%s''<br>Entrada/Salida: ' '%s' % (self.hora, self.entrada_salida)
+        return u'<br>Hora: %s <br> Entrada/Salida: %s' % (self.hora, self.entrada_salida)

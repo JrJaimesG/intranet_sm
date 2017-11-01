@@ -63,9 +63,10 @@
       jQuery(document).ready(function() {
       
         $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy',
-          autoclose: true,
-          keyboardNavigation : true ,
+          format: 'DD.MM.YYYY',
+          startDate: new Date(),
+          //autoclose: true,
+          //keyboardNavigation : true ,
           //daysOfWeekDisabled : [1],
           //language: "es"
         }).val();

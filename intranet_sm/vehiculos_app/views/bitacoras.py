@@ -45,7 +45,7 @@ class BitacoraCreateView(LoginRequiredMixin, CreateView):
 
     # send the user back to their own page after a successful update
     def get_success_url(self):
-        return reverse('vehiculosapp:solicitudes_list')
+        return reverse('vehiculosapp:solicitudes_view', kwargs={"pk": self.kwargs['solicitud_id']})
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -53,7 +53,14 @@ class BitacoraCreateView(LoginRequiredMixin, CreateView):
         asignacion = Asignacion.objects.get(pk=self.kwargs['asignacion_id'])
         self.object.solicitud_id = self.kwargs['solicitud_id']
         self.object.asignacion_id = self.kwargs['asignacion_id']
-        solicitud.estado_solicitud = "E"
+        #contar bitacoras
+        totalbitacoras = Bitacora.objects.filter(asignacion__solicitud_id=self.kwargs['solicitud_id']).count()
+        if totalbitacoras == 0:
+            solicitud.estado_solicitud = "E"
+            self.object.entrada_salida = "S"
+        else:
+            solicitud.estado_solicitud = "F"
+            self.object.entrada_salida = "E"
         solicitud.save()
         self.object.save()
 

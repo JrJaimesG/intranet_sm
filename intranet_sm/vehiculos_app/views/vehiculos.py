@@ -39,7 +39,7 @@ class VehiculoCreateView(LoginRequiredMixin, CreateView):
         'tipo',
         'uso',
         'n_puestos',
-        'capa_tanque_gasolina',
+        'kilometraje',
     ]
 
     model = Vehiculo

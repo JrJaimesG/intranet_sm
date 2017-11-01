@@ -8,7 +8,7 @@ class BitacoraForm(forms.ModelForm):
     
     class Meta:
          model = Bitacora
-         fields = ['hora', 'nivel_tanque_gasolina', 'kilometraje', 'observaciones', 'entrada_salida']
+         fields = ['hora', 'nivel_tanque_gasolina', 'kilometraje', 'observaciones']
 
          widgets = {
             'hora': forms.TimeInput(attrs={'type': 'time'}),

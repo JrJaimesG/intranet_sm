@@ -42,12 +42,16 @@
                         </tr>
                         <tr>
                             <td>Tipo</td>
-                            {% if object.tipo == 'P' %}
-                            <td>Pick-up</td>
-                            {% elif object.tipo == 'S' %}
-                            <td>Sedan</td>
-                            {% else %}
-                            <td>Motocicleta</td>
+                            {% if veh.tipo == 'P' %}
+                                <td>Pick-up</td>
+                            {% elif veh.tipo == 'S' %}
+                                <td>Sedan</td>
+                            {% elif veh.tipo == 'M' %}
+                                <td>Motocicleta</td>
+                            {% elif veh.tipo == 'H' %}
+                                <td>Hatchback</td>
+                            {% elif veh.tipo == 'C' %}
+                                <td>Camioneta</td>
                             {% endif %}
 
                         </tr>
